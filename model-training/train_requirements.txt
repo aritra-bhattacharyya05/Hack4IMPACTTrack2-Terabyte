@@ -1,0 +1,12 @@
+# AgriAI Assist — Model Training Dependencies
+# Install on the training laptop only (not needed for the backend server)
+#
+# pip install -r train_requirements.txt
+
+tensorflow==2.16.1
+scikit-learn==1.4.2
+joblib==1.4.2
+numpy==1.26.4
+pandas==2.2.2
+Pillow==10.3.0
+matplotlib==3.9.0    # optional — useful for plotting training curves

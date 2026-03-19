@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+backend/venv/
+backend/uploads/
+*.h5
+*.pkl
+
+# OS
+.DS_Store
+Thumbs.db
