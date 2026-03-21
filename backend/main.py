@@ -2,6 +2,7 @@
 AgriAI Assist — FastAPI Backend
 Disease Detection + Yield Prediction + GenAI Remedy
 """
+import os
 import logging
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,4 +44,15 @@ app.include_router(yield_pred.router, prefix="/api", tags=["Yield"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+    try:
+        port = int(os.getenv("PORT", "8000"))
+    except (TypeError, ValueError):
+        port = 8000
+
+    uvicorn.run(
+        "main:app",
+        host=os.getenv("HOST", "0.0.0.0"),
+        port=port,
+        reload=True,
+    )
