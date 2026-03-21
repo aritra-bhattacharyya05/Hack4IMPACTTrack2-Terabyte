@@ -57,9 +57,6 @@ pip install -r requirements.txt
 python main.py
 ```
 
-Backend runs at: http://localhost:8000  
-Docs: http://localhost:8000/docs
-
 ### 2) Frontend
 
 Open a new terminal:
@@ -69,8 +66,6 @@ cd frontend
 npm install
 npm start
 ```
-
-Frontend runs at: http://localhost:3000
 
 ## API Endpoints
 
