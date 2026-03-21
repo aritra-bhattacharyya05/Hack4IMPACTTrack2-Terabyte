@@ -30,6 +30,11 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "AgrIAI backend is running"}
+
+
 @app.on_event("startup")
 async def startup_event():
     logger.info("Loading models from Hugging Face...")
