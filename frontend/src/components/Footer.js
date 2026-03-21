@@ -41,7 +41,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="container" style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 'var(--space-8)', paddingTop: 'var(--space-6)', fontSize: '0.82rem', opacity: 0.55 }}>
-        © 2024 AgriAI Assist · Built for IITM Hackathon
+        © 2024 AgriAI Assist · @2026
       </div>
     </footer>
   );
