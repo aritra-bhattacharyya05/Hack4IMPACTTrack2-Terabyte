@@ -4,6 +4,7 @@ Downloads disease_model.pt + yield_model.pkl from Hugging Face
 and loads them into memory ONCE at startup.
 """
 import logging
+from contextlib import contextmanager
 import torch
 import torch.nn as nn
 import joblib
@@ -27,6 +28,29 @@ _state = {
     "test_accuracy":  0.0,
     "device":         None,
 }
+
+
+@contextmanager
+def _patched_print_callback_symbol():
+    """Temporarily expose PrintCallback for legacy pickle deserialization."""
+
+    class PrintCallback:
+        def after_iteration(self, model, epoch, evals_log):
+            return False
+
+    import __main__
+
+    had_existing = hasattr(__main__, "PrintCallback")
+    previous_value = getattr(__main__, "PrintCallback", None)
+    __main__.PrintCallback = PrintCallback
+
+    try:
+        yield
+    finally:
+        if had_existing:
+            __main__.PrintCallback = previous_value
+        else:
+            delattr(__main__, "PrintCallback")
 
 
 def get_device() -> torch.device:
@@ -82,7 +106,8 @@ def load_all_models():
         logger.info(f"Downloading {YIELD_FILE} from {HF_REPO}...")
         yield_path = hf_hub_download(repo_id=HF_REPO, filename=YIELD_FILE)
 
-        yield_model = joblib.load(yield_path)
+        with _patched_print_callback_symbol():
+            yield_model = joblib.load(yield_path)
         _state["yield_model"] = yield_model
         logger.info("Yield model loaded")
 
